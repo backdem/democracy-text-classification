@@ -1,3 +1,6 @@
+# Models
+*.pth
+
 # Datasets
 *.csv
 

@@ -2,7 +2,7 @@ import pandas as pd
 import hashlib
 import re
 import sys
-label_file = '../../data/democracy_reports_corpus_annelisa.csv'
+label_file = '../../data/democracy_reports_corpus_annelisa_9.csv'
 column_name = 'sentence,section,country,year,source'
 #['dimension1', 'dimension2', 'dimension3', 'dimension 4', 'backsliding', 'cat 4 sentence nuance', 'comments + possible need to be changed bc of changes in labeling instructions (marked: ?)', '', '', 'Group: sentences we discussed, X for no consensus, O for new consensus', '', '', '', '', '', '', '', '', '']
 i = 0
@@ -53,7 +53,7 @@ with open(label_file, 'r') as file:
             row['source'] = country_year_source[2]
 
         if len(labels) < 10:
-            print(f"[WARNING 2] line: {line} has only {len(labels)} labels.")
+            #print(f"[WARNING 2] line: {line} has only {len(labels)} labels.")
             row['dimension1'] = ''
             row['dimension2'] = ''
             row['dimension3'] = ''

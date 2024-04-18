@@ -52,29 +52,27 @@ with open(label_file, 'r') as file:
             row['year'] = country_year_source[1]
             row['source'] = country_year_source[2]
 
-        if len(labels) < 10:
+        if len(labels) < 9:
             #print(f"[WARNING 2] line: {line} has only {len(labels)} labels.")
-            row['dimension1'] = ''
-            row['dimension2'] = ''
-            row['dimension3'] = ''
-            row['dimension4'] = ''
-            row['backsliding'] = ''
-            row['cat_4_sentence_nuance'] = ''
-            row['comments'] = ''
-            row['undefined0'] = ''
-            row['undefined1'] = ''
-            row['consensus'] = ''
+            row['dimension1'] = None
+            row['dimension2'] = None
+            row['backsliding'] = None
+            row['cat_4_sentence_nuance'] = None
+            row['start_idea'] = None
+            row['comments'] = None
+            row['undefined0'] = None
+            row['undefined1'] = None
+            row['consensus'] = None
         else:
             row['dimension1'] = labels[0]
             row['dimension2'] = labels[1]
-            row['dimension3'] = labels[2]
-            row['dimension4'] = labels[3]
-            row['backsliding'] = labels[4]
-            row['cat_4_sentence_nuance'] = labels[5]
-            row['comments'] = labels[6]
-            row['undefined0'] = labels[7]
-            row['undefined1'] = labels[8]
-            row['consensus'] = labels[9]
+            row['backsliding'] = labels[2]
+            row['cat_4_sentence_nuance'] = labels[3]
+            row['start_idea'] = labels[4]
+            row['comments'] = labels[5]
+            row['undefined0'] = labels[6]
+            row['undefined1'] = labels[7]
+            row['consensus'] = labels[8]
 
 
         if(len(country_year_source) < 3):

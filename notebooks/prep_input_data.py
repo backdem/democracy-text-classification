@@ -163,10 +163,10 @@ def get_vectorized_labelled_data(corpus_file, column='dimension1', group_by_idea
 
 
 # Test
-corpus_file = '../../data/democracy_reports_corpus_annelisa_9_fixed.csv'
-df = get_vectorized_labelled_data(corpus_file)
+#corpus_file = '../../data/democracy_reports_corpus_annelisa_9_fixed.csv'
+#df = get_vectorized_labelled_data(corpus_file)
 #df = get_labelled_data(corpus_file, group_by_idea=True)
 #df['sentence_len'] = df['sentence'].dropna().apply(len)
 #max_l = df['sentence_len'].max()
 #print(max_l)
-df.to_csv('./AAAAtext.csv', index=False)
+#df.to_csv('./AAAAtext.csv', index=False)

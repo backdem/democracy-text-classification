@@ -2,7 +2,8 @@ import pandas as pd
 import hashlib
 import re
 import sys
-label_file = '../../data/democracy_reports_corpus_annelisa_9.csv'
+#label_file = '../../data/democracy_reports_corpus_annelisa_9.csv'
+label_file = '../../data/democracy_reports_corpus_teun_120424.csv'
 column_name = 'sentence,section,country,year,source'
 #['dimension1', 'dimension2', 'dimension3', 'dimension 4', 'backsliding', 'cat 4 sentence nuance', 'comments + possible need to be changed bc of changes in labeling instructions (marked: ?)', '', '', 'Group: sentences we discussed, X for no consensus, O for new consensus', '', '', '', '', '', '', '', '', '']
 i = 0
@@ -66,11 +67,13 @@ with open(label_file, 'r') as file:
         else:
             row['dimension1'] = labels[0]
             row['dimension2'] = labels[1]
-            row['backsliding'] = labels[2]
+            #row['backsliding'] = labels[2]
+            row['backsliding'] = labels[4]
             row['cat_4_sentence_nuance'] = labels[3]
-            row['start_idea'] = labels[4]
+            #row['start_idea'] = labels[4]
+            row['start_idea'] = labels[6]
             row['comments'] = labels[5]
-            row['undefined0'] = labels[6]
+            row['undefined0'] = None
             row['undefined1'] = labels[7]
             row['consensus'] = labels[8]
 
@@ -84,9 +87,18 @@ with open(label_file, 'r') as file:
 df_good = pd.DataFrame(data)
 df_bad = pd.DataFrame(other_data)
 
-df_good.to_csv("result.csv", index=False)
-df_bad.to_csv("result_bad.csv", index=False)
+df_good.to_csv("result_teun.csv", index=False)
+df_bad.to_csv("result_bad_teun.csv", index=False)
 
-df = pd.read_csv('result.csv')
-print(df.sample(10))
+df = pd.read_csv('result_teun.csv')
+df_filtered = df[df['dimension1'].notnull()]
+sample_rows = df_filtered.sample(100)
+
+# Iterate through the rows
+for index, row in sample_rows.iterrows():
+    print(f"Row {index}:")
+    # Iterate through the columns
+    for column_name, column_value in row.items():
+        print(f"{column_name}: {column_value}")
+    print()  # Print an empty line for separation
 

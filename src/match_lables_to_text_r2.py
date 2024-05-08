@@ -9,6 +9,14 @@ column_name = 'sentence,section,country,year,source'
 i = 0
 data = []
 other_data = []
+typos = { 'ambigous': 'ambiguous', 'electioms': 'elections', 'opo': 'open government'}
+def fix(l):
+    # {'direct democracy ', 'ambiguous ', 'ambigous', 'liberal rights', 'electoral', 'elections ', 'electioms', 'media ', 'opo', 'participatory', ' ambiguous'}
+    if l.strip() in typos:
+        return typos[l]
+    else:
+        return l.strip()
+
 with open(label_file, 'r') as file:
     for _line in file:
         # Substitute the old section column of form "[something, eomthing else, etc]"
@@ -79,8 +87,8 @@ with open(label_file, 'r') as file:
             row['undefined1'] = None
             row['consensus'] = None
         else:
-            row['dimension1'] = labels[0]
-            row['dimension2'] = labels[1]
+            row['dimension1'] = fix(labels[0])
+            row['dimension2'] = fix(labels[1])
             #row['backsliding'] = labels[2]
             row['backsliding'] = labels[4]
             row['cat_4_sentence_nuance'] = labels[3]

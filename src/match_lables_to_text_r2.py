@@ -10,10 +10,18 @@ i = 0
 data = []
 other_data = []
 with open(label_file, 'r') as file:
-    for line in file:
+    for _line in file:
         # Substitute the old section column of form "[something, eomthing else, etc]"
+        matched_strs = []
+        # Save matched string to replace later.
+        def save_match(match):
+            # Save the matched substring to a list
+            matched_strs.append(match.group(0))
+            # You can perform additional processing here if needed
+            return 'QWERTY'
+
         # for easy comma splitting later
-        line = re.sub(r'\[.*?\]','QWERTY', line.strip())
+        line = re.sub(r'\[.*?\]', save_match, _line.strip())
         row = {}
         i += 1
         # Skip header line
@@ -42,7 +50,13 @@ with open(label_file, 'r') as file:
         country_year_source = text_parts[-3:]
         # Rejoin the rest to form the old sentence
         sentence = ','.join(text_parts[:-4])
-
+        # Replace back QWERTY tokens
+        while 'QWERTY' in sentence:
+            #print(f"[WARNING 3] Invalid token in {sentence}.")
+            replacement = matched_strs.pop(0)
+            sentence = re.sub('QWERTY', replacement, sentence, count=1)
+            #print(f"<--{_line.strip()}")
+            #print(f"-->{sentence}")
         if(len(country_year_source) < 3):
             # Something went wrong save it somewhere else
             print(f"[WARNING 1] line: {line} has no country_year_source.")
@@ -87,10 +101,10 @@ with open(label_file, 'r') as file:
 df_good = pd.DataFrame(data)
 df_bad = pd.DataFrame(other_data)
 
-df_good.to_csv("result_teun.csv", index=False)
-df_bad.to_csv("result_bad_teun.csv", index=False)
+df_good.to_csv("result_r2.csv", index=False)
+df_bad.to_csv("result_bad_r2.csv", index=False)
 
-df = pd.read_csv('result_teun.csv')
+df = pd.read_csv('result_r2.csv')
 df_filtered = df[df['dimension1'].notnull()]
 sample_rows = df_filtered.sample(100)
 

@@ -79,6 +79,39 @@ def group_on_idea(df, max_len=510):
         new_rows.append(strip_row(row))
     return pd.DataFrame(new_rows, columns=columns)
 
+def get_labelled_data_2(corpus_file, all=False, column='dimension1', group_by_idea=False):
+    # Read csv file into Dataframe
+    df = pd.read_csv(corpus_file, dtype={'year': str},comment='#')
+    if (all == True):
+        df_labelled = df 
+    else:
+        # Filter for labelled data
+        df_labelled = df[df[column].notnull()] 
+    # Print sample rows
+    #print(df_labelled.sample(5))
+
+    # Convert column to numeric
+    def convert_to_int(x):
+        try:
+            # Combine class 4 (ambivalent) with class 0 (ambiguous)
+            y = int(x)
+            if y == 4:
+                return int(0)
+            else:            
+                return int(x)  # For example, doubling the values after converting to int
+        except ValueError:
+            return None
+
+    # Get label names
+    # labels = df_labelled[column].dropna().unique()
+    # print(f'Found labels: {labels}')
+    df_new = df_labelled.copy()
+    # Convert backsliding to int
+    #df_new['backsliding'] = df_new['backsliding'].apply(convert_to_int)
+    #if group_by_idea:
+    #    df_new = group_on_idea(df_new)
+
+    return df_new
 
 def get_labelled_data(corpus_file, all=False, column='dimension1', group_by_idea=False, use_higher_dimensions=True):
     # Read csv file into Dataframe
@@ -87,7 +120,7 @@ def get_labelled_data(corpus_file, all=False, column='dimension1', group_by_idea
         df_labelled = df 
     else:
         # Filter for labelled data
-        df_labelled = df[df['dimension1'].notnull()] 
+        df_labelled = df[df[column].notnull()] 
     # Print sample rows
     #print(df_labelled.sample(5))
 
@@ -149,7 +182,7 @@ def get_vectorized_labelled_data(corpus_file, column='dimension1', group_by_idea
         #label = row[column]
         return [int(l == label) for l in labels]
         
-    df_labelled = get_labelled_data(corpus_file, all=False, column=column, group_by_idea=group_by_idea)
+    df_labelled = get_labelled_data_2(corpus_file, all=False, column=column, group_by_idea=group_by_idea)
     labels = []
     if use_higher_dimensions:
         labels = sorted(df_labelled['dimension0'].dropna().unique())

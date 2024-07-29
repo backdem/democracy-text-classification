@@ -35,6 +35,9 @@ def higher_dimension(x):
         return 'media'
     if x == 'liberal institutions' or x == 'freedoms' or x == 'equality' or x == 'liberal': 
         return 'liberal'
+    if x == 'democracy':
+        # Only found one occurrence; must be a typo
+        return None
     return x
 
 def compare_first_n_words(str1, str2, n=4):
@@ -64,6 +67,10 @@ count_correct = df_out[input_name].notna().sum()
 print(f"Count correct_dimension: {count_correct}")
 count_dim0 = df_out[higher_level_column_name].notna().sum()
 print(f"Count dimension0: {count_dim0}")
+
+# Get label names
+labels = sorted(df_out[higher_level_column_name].dropna().unique())
+print(f'Dimensions: {labels}')
 
 file_name = datetime.now().strftime('../../data/democracy_reports_corpus_%d%m%y')
 

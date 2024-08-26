@@ -46,7 +46,3 @@ The goal of this project was to develop a text classification model that could c
 ## 7. Saving the Model
 
 - The trained model, along with the evaluation metrics and confusion matrix, was saved to a file. The filename included metadata about the dataset (e.g., whether ambiguous data was dropped, whether labels were balanced) and the current date for version control.
-
-## 8. Conclusion
-
-The RoBERTa-based model effectively classified sentences into their respective dimensions with reasonable accuracy and F1 scores. This demonstrates the potential of transformer-based models for text classification tasks in political and social science domains. Further improvements could be explored by using more sophisticated data augmentation techniques, hyperparameter tuning, and experimenting with other transformer models.
